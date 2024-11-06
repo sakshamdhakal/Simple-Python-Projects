@@ -1,6 +1,9 @@
+#CHECKS THE STRENGTH OF A PASSWORD
+
+""" **REQUIREMENTS** 
 # length >= 8
 # number atleast 1
-# uppercase at least 1
+# uppercase at least 1 """
 
 while True :
     password = input("Enter your password:")
