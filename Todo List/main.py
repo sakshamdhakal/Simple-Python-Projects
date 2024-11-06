@@ -1,3 +1,16 @@
+def read_todos(filepath="todos.txt") :
+    """ Read a text file and returns the list of todo items."""
+    with open(filepath,'r') as file_local :
+        todos_local = file_local.readlines() # reads everything in file and copies it in todos
+    return todos_local
+
+
+def write_todos(todos_arg, filepath="todos.txt") :
+    """ Writes the todo items list in the text file."""
+    with open(filepath,'w') as file : # opens a txt file 
+       file.writelines(todos_arg)
+
+
 while True:
     # getting user input
     user_input = input("Type add, show, edit, complete, or exit:").strip() #removes any spaces in input
@@ -9,13 +22,12 @@ while True:
 
         if todo:  
             with open('todos.txt', 'a') as file :
-                file.write(todo + "\n") # adds a newline so every todo is in a new line
+                file.writelines(todo + "\n") # adds a todo in a new line
         else :
                 print("Input cannot be empty")
             
     elif user_input.startswith("show") :
-        with open('todos.txt','r') as file :
-            todos = file.readlines() # reads everything in file and copies it in todos
+        todos = read_todos()
 
         if todos: 
 
@@ -28,8 +40,7 @@ while True:
                 print("No Todos found. Please add one.")
 
     elif user_input.startswith("edit") :
-        with open('todos.txt','r') as file :
-            todos = file.readlines()
+        todos = read_todos()
 
         if todos : 
             number_str = user_input[5:].strip()
@@ -44,8 +55,7 @@ while True:
                         new_todo = input("Enter a new todo:")
                         if new_todo :
                             todos[number] = new_todo + "\n"
-                            with open('todos.txt','w') as file : # opens a txt file 
-                                file.writelines(todos)
+                            write_todos(todos[number])
                         else :
                             print("New todo cannot be empty!")
                     else :
@@ -60,29 +70,27 @@ while True:
             print("No todos to edit:")
 
     elif user_input.startswith("complete") :
-        with open('todos.txt','r') as file :
-            todos = file.readlines()
-            if todos:
-                number_str = user_input[9:].strip()
-                if number_str:
-                    try :
-                        number = int(number_str)
+        todos = read_todos()
+        if todos:
+            number_str = user_input[9:].strip()
+            if number_str:
+                try :
+                    number = int(number_str)
 
-                        if 0 < number <= len(todos) : #checks if the number is in the list or 
-                            index = number - 1
-                            remove_todo = todos[index].strip('\n')
-                            todos.pop(index)
-                            
-                            with open('todos.txt','w') as file :
-                                file.writelines(todos)
-                            
-                            message = f"Todo {remove_todo.title()} was removed"
-                            print(message)
-                        else :
-                            print("Enter a correct number.")
-                    except ValueError :
-                        print("Please Enter a Number!")
-            else :
+                    if 0 < number <= len(todos) : #checks if the number is in the list or 
+                        index = number - 1
+                        remove_todo = todos[index].strip('\n')
+                        todos.pop(index)
+                        
+                        write_todos(todos)
+                        
+                        message = f"Todo {remove_todo.title()} was removed"
+                        print(message)
+                    else :
+                        print("Enter a correct number.")
+                except ValueError :
+                    print("Please Enter a Number!")
+        else :
                 print("No todos to complete!")
 
     elif 'exit' in user_input :
