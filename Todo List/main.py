@@ -1,15 +1,4 @@
-def read_todos(filepath="todos.txt") :
-    """ Read a text file and returns the list of todo items."""
-    with open(filepath,'r') as file_local :
-        todos_local = file_local.readlines() # reads everything in file and copies it in todos
-    return todos_local
-
-
-def write_todos(todos_arg, filepath="todos.txt") :
-    """ Writes the todo items list in the text file."""
-    with open(filepath,'w') as file : # opens a txt file 
-       file.writelines(todos_arg)
-
+import functions
 
 while True:
     # getting user input
@@ -27,7 +16,7 @@ while True:
                 print("Input cannot be empty")
             
     elif user_input.startswith("show") :
-        todos = read_todos()
+        todos = functions.read_todos()
 
         if todos: 
 
@@ -40,7 +29,7 @@ while True:
                 print("No Todos found. Please add one.")
 
     elif user_input.startswith("edit") :
-        todos = read_todos()
+        todos = functions.read_todos()
 
         if todos : 
             number_str = user_input[5:].strip()
@@ -55,7 +44,7 @@ while True:
                         new_todo = input("Enter a new todo:")
                         if new_todo :
                             todos[number] = new_todo + "\n"
-                            write_todos(todos[number])
+                            functions.write_todos(todos[number])
                         else :
                             print("New todo cannot be empty!")
                     else :
@@ -70,7 +59,7 @@ while True:
             print("No todos to edit:")
 
     elif user_input.startswith("complete") :
-        todos = read_todos()
+        todos = functions.read_todos()
         if todos:
             number_str = user_input[9:].strip()
             if number_str:
@@ -82,7 +71,7 @@ while True:
                         remove_todo = todos[index].strip('\n')
                         todos.pop(index)
                         
-                        write_todos(todos)
+                        functions.write_todos(todos)
                         
                         message = f"Todo {remove_todo.title()} was removed"
                         print(message)
