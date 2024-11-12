@@ -1,5 +1,6 @@
 import functions
 
+
 while True:
     # getting user input
     user_input = input("Type add, show, edit, complete, or exit:").strip() #removes any spaces in input
