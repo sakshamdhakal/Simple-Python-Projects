@@ -32,10 +32,8 @@ while True:
 
     elif user_input.startswith("edit") :
         todos = functions.read_todos()
-
         if todos : 
             number_str = user_input[5:].strip()
-            # print(number)
             if number_str :
                 try :
                     number = int(number_str)
@@ -46,12 +44,12 @@ while True:
                         new_todo = input("Enter a new todo:")
                         if new_todo :
                             todos[number] = new_todo + "\n"
-                            functions.write_todos(todos[number])
+                            functions.write_todos(todos)
                         else :
                             print("New todo cannot be empty!")
                     else :
                         print("Enter a correct number.")
-                    
+
                 except ValueError:
                     print("Please input a number")
                     continue
